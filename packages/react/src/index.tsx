@@ -17,7 +17,7 @@ class ErrorBoundary extends React.Component<ReactErrorBoundaryProps, { hasError:
 
   componentDidCatch(error, _errorInfo) {
     const { onError } = this.props;
-    
+
     console.error('图表渲染失败: ', error);
 
     if (typeof onError === 'function') {

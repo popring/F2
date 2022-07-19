@@ -28,12 +28,13 @@ function App(props: any) {
   );
 }
 
-describe.skip('<Canvas >', () => {
-  it('Chart render', () => {
+describe('<Canvas >', () => {
+  it('Chart render', async () => {
     const chartRef = React.createRef<any>();
     const lineRef = React.createRef<any>();
 
     const wrapper = mount(<App chartRef={chartRef} lineRef={lineRef} />);
+    // await wrapper();
     expect(wrapper.html()).toBe(
       '<canvas class="f2-chart newClass" width="100" height="100" style="width: 100px; height: 100px; display: block; padding: 0px; margin: 0px;"></canvas>'
     );
@@ -42,17 +43,19 @@ describe.skip('<Canvas >', () => {
     const line = lineRef.current;
     // 断言实例生成和ref正确性
     expect(reactChart.canvas).toBeInstanceOf(Canvas);
+
     expect(line).toBeInstanceOf(Line);
     expect(line.props.a).toBeUndefined();
 
     // 触发update
     wrapper.setProps({ a: 2 });
+    // await delay(2000);
     expect(line.props.a).toBe(2);
 
     wrapper.unmount();
   });
 
-  it('Chart render with Error', () => {
+  it.skip('Chart render with Error', () => {
     const spyOnError = jest.spyOn(window, 'onerror').mockImplementation(() => {});
     const spyOnConsoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
     class Test extends Component {
